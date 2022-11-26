@@ -25,14 +25,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/upload-csv-file")
-    public String uploadCSVFile(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+    public String uploadCSVFile(@RequestParam("file") MultipartFile file,
+                                @RequestParam("format") String format,
+                                Model model) throws IOException {
 
-        // validate file
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a CSV file to upload.");
             model.addAttribute("status", false);
         } else {
-            employeeService.saveEmployees(file);
+            employeeService.saveEmployees(file, format);
             model.addAttribute("status", true);
         }
 

@@ -1,6 +1,7 @@
 package com.example.pairofemployees.entity;
 
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ public class Employee {
     private long id;
 
     @CsvBindByName(column = "EmpId")
-    private long empId;
+    private long employeeId;
 
     @CsvBindByName(column = "ProjectID")
     private long projectID;
@@ -25,10 +26,10 @@ public class Employee {
     @CsvBindByName(column = "DateTo")
     private LocalDate dateTo;
 
-    public Employee(long id, long empId, long projectID,
+    public Employee(long id, long employeeId, long projectID,
                     LocalDate dateFrom, LocalDate dateTo) {
         this.id = id;
-        this.empId = empId;
+        this.employeeId = employeeId;
         this.projectID = projectID;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -45,12 +46,12 @@ public class Employee {
         return this;
     }
 
-    public long getEmpId() {
-        return empId;
+    public long getEmployeeId() {
+        return employeeId;
     }
 
-    public Employee setEmpId(long empId) {
-        this.empId = empId;
+    public Employee setEmployeeId(long empId) {
+        this.employeeId = empId;
         return this;
     }
 

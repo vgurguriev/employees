@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,41 +26,42 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public void saveEmployees(MultipartFile file) throws IOException {
+    public void saveEmployees(MultipartFile file, String format) throws IOException {
         Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
-
 
             CsvToBean<EmployeeDTO> csvToBean = new CsvToBeanBuilder<EmployeeDTO>(reader)
                     .withType(EmployeeDTO.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
 
-
             List<EmployeeDTO> employeesDTO = csvToBean.parse();
-
 
             List<Employee> employees =  employeesDTO
                     .stream()
                             .map(employeeDTO -> new Employee()
-                                    .setEmpId(employeeDTO.getEmpId())
+                                    .setEmployeeId(employeeDTO.getEmpId())
                                     .setProjectID(employeeDTO.getProjectID())
-                                    .setDateFrom(LocalDate.parse(employeeDTO.getDateFrom()))
-                                    .setDateTo(getTimeTo(employeeDTO.getDateTo())))
+                                    .setDateFrom(LocalDate.parse(employeeDTO.getDateFrom(), getFormatter(format)))
+                                    .setDateTo(getTimeTo(employeeDTO.getDateTo(), format)))
                     .collect(Collectors.toList());
 
         employeeRepository.saveAll(employees);
     }
 
-    private LocalDate getTimeTo(String dateTo) {
+    private DateTimeFormatter getFormatter(String format) {
+        return new DateTimeFormatterBuilder().appendPattern(format)
+                .toFormatter();
+    }
+
+    private LocalDate getTimeTo(String dateTo, String format) {
         if (dateTo.equals("NULL")) {
             return LocalDate.now();
         }
 
-        return LocalDate.parse(dateTo);
+        return LocalDate.parse(dateTo, getFormatter(format));
     }
 
     public List<Employee> getAllEmployees() {
-        return this.employeeRepository
-                .findAll();
+        return employeeRepository.findAll();
     }
 }

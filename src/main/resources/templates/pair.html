@@ -13,7 +13,11 @@
 
 <div class="card">
 <h1 class="d-flex justify-content-center" style="margin-top: 20px">Pair of employees who have worked together</h1>
-<table class="table table-striped" style="margin-top: 20px">
+
+    <div th:if="${team} == null" style="margin-top: 20px">
+        <h2 class="d-flex justify-content-center" style="color: red">No valid pair</h2>
+    </div>
+    <table th:if="${team} != null" class="table table-striped" style="margin-top: 20px">
     <thead>
     <tr>
         <th scope="col">#</th>

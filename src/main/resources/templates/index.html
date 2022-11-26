@@ -12,6 +12,17 @@
 <body>
 <form class="d-flex justify-content-center align-items-center" style="margin-top: 20px; display: flex; flex-direction: column"  method="POST" th:action="@{/upload-csv-file}" enctype="multipart/form-data">
     <h1 class="d-flex justify-content-center">Select CSV file to upload employees</h1>
+
+    <label>
+        Select Your Date Format
+    </label>
+    <select name="format">
+        <option value="yyyy-MM-dd">yyyy-mm-dd</option>
+        <option value="yyyy-DD-mm">yyyy-dd-mm</option>
+        <option value="mm-DD-yyyy">mm-dd-yyyy</option>
+        <option value="dd-MM-yyyy">dd-mm-yyyy</option>
+    </select>
+
     <div class="justify-content-center form-group mt-3" style="margin-top: 20px">
         <label class="d-flex justify-content-center" for="file">Select a CSV file</label>
         <input class="justify-content-center" type="file" name="file" id="file" accept=".csv">

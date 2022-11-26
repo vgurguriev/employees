@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProjectController {
     private final ProjectService projectService;
 
-
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
-
     }
 
     @GetMapping("/pairs")
     public String getPairs(Model model) {
-        projectService.findPairs();
+        projectService.generateTeams();
         Team team = projectService.findProjectWithMostDaysWorked();
 
         model.addAttribute("team", team);
