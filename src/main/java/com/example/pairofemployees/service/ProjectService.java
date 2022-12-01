@@ -31,6 +31,7 @@ public class ProjectService {
     public void generateTeams() {
         List<Employee> employees = employeeService.getAllEmployees();
         List<Team> teams = new ArrayList<>();
+        Map<String, Integer> teamMap = new HashMap<>();
 
         for (int i = 0; i < employees.size() - 1; i++) {
             for (int j = i + 1; j < employees.size(); j++) {
