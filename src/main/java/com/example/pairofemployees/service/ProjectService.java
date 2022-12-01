@@ -5,6 +5,7 @@ import com.example.pairofemployees.entity.Project;
 import com.example.pairofemployees.entity.Team;
 import com.example.pairofemployees.repository.ProjectRepository;
 import com.example.pairofemployees.repository.TeamRepository;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,11 +41,13 @@ public class ProjectService {
                     Employee first = employees.get(i);
                     Employee second = employees.get(j);
 
+//                  TODO: move hasWorkedTogether() in previous if statement
                     if (first.getProjectID() == second.getProjectID() &&
                             hasWorkedTogether(first, second)) {
 
                         projectHasFound = false;
 
+//                      TODO: replace forEach with Map
                         if (!teams.isEmpty()) {
                             teams.forEach(team -> {
                                 if (doesTeamExist(team.getFirstEmployee(), team.getSecondEmployee(),
@@ -63,7 +66,6 @@ public class ProjectService {
                             });
                         }
 
-
                         if (!teamHasFound) {
                             Team team = new Team();
                             team.setFirstEmployee(first.getEmployeeId());
@@ -81,7 +83,11 @@ public class ProjectService {
     }
 
     public Team findProjectWithMostDaysWorked() {
-        Team bestTeam = projectRepository.findFirstByOrderByTotalTimeDesc().map(Project::getTeam).orElse(null);
+        Team bestTeam = projectRepository
+                .findFirstByOrderByTotalTimeDesc()
+                .map(Project::getTeam)
+                .orElse(null);
+
         if (Objects.isNull(bestTeam)) {
             return null;
         }

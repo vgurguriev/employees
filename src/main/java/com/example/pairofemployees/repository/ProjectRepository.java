@@ -8,4 +8,8 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     Optional<Project> findFirstByOrderByTotalTimeDesc();
+
+/*    TODO: create query to get team who worked together
+       on common PROJECTS for the longest period of time
+ */
 }
